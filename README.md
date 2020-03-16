@@ -16,6 +16,31 @@ This repository contains a collection of sample containerized applications.  To 
 `oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson`
 `oc secrets link default quayio --for pull`
 
+### access internal registry
+oc get route -n openshift-image-registry
+curl -X GET default-route-openshift-image-registry.apps.ocp-na2.prod.nextcle.com/v2/_catalog 
+INTERNAL_REGISTRY=$(oc get route default-route -n openshift-image-registry -o jsonpath='{.spec.host}')
+echo $INTERNAL_REGISTRY 
+oc new-project rhn-gps-eboyer-common
+TOKEN=$(oc whoami -t)
+skopeo copy --dest-creds=rhn-gps-eboyer:${TOKEN} oci:/home/student/DO288/labs/expose-registry/ubi-info docker://${INTERNAL_REGISTRY}/rhn-gps-eboyer-common/ubi-info:1.0
+oc get is
+sudo podman login -u rhn-gps-eboyer -p $TOKEN $INTERNAL_REGISTRY
+sudo podman pull $INTERNAL_REGISTRY/rhn-gps-eboyer-common/ubi-info:1.0
+sudo podman images
+sudo podman run --name info $INTERNAL_REGISTRY/rhn-gps-eboyer-common/ubi-info:1.0
+oc delete is ubi-info
+oc delete project rhn-gps-eboyer-common
+
+### image streams
+- To build and deploy applications using an image stream that is defined in another project:
+podman login -u myuser registry.example.com
+oc project shared
+oc create secret generic regtoken --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
+oc import-image myis --confirm --reference-policy local --from registry.example.com/myorg/myimage
+oc policy add-role-to-group system:image-puller system:serviceaccounts:myapp
+oc project myapp
+oc new-app -i shared/myis
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
