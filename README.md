@@ -45,8 +45,13 @@ oc new-app -i shared/myis
 ### expose images
 - In this section we copied an image from disk to our personal account on quay.io, then created an openshift project which imported the image. The import-image action created an imageStream that would then be referenced by a second project created to run the application. Key takeaways 1) secret needs to be created for openshift to access the external image and 2) the image-puller role needs to be assigned to the project when referencing resources in another project (see grant-puller-role.sh for details).
 
-
-
+### templates
+- You can create manually, concatenate using new-app, or export existing resources using `oc get -o yaml --export <resources>`, note order of resources is important if exporting.
+'oc get -o yaml --export is,secret,bc,dc,svc,route > mytemplate.yaml'
+Example of creating apps from templates:
+- oc new-app --file mytemplate.yaml -p PARAM1=value1 -p PARAM2=value2
+- oc process -f mytemplate.yaml -p PARAM1=value1 -p PARAM2=value2 > myresourcelist.yaml | oc create -f -
+- Red Hat recommends using the new-app options and only using 'oc process -f my.yaml --parameters' to list parameters
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
