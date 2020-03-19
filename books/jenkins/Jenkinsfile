@@ -13,8 +13,8 @@ pipeline {
         //DONE: Edit these vars as per your env
         DEV_PROJECT = "rhn-gps-eboyer-books-dev"
         STAGE_PROJECT = "rhn-gps-eboyer-books-stage"
-        APP_GIT_URL = "https://github.com/rhn-gps-eboyer/DO288-apps"
-        NEXUS_SERVER = "http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs"
+        APP_GIT_URL = "https://github.com/ericboyer/DO288-apps"
+        NEXUS_SERVER = "http://nexus-common.apps.ocp-na2.prod.nextcle.com/repository/nodejs"
 
         // DO NOT CHANGE THE GLOBAL VARS BELOW THIS LINE
         APP_NAME = "books"
