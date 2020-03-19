@@ -5,16 +5,17 @@ pipeline {
     }
     agent {
       node {
-        //TODO: Add label for the Maven jenkins agent
+        //DONE: Add label for the Maven jenkins agent
+        label 'maven'
       }
     }
 
     environment {
-        //TODO: Customize these variables for your environment
-        DEV_PROJECT = "youruser-movies-dev"
-        STAGE_PROJECT = "youruser-movies-stage"
-        APP_GIT_URL = "https://github.com/youruser/DO288-apps"
-        NEXUS_SERVER = "http://nexus-common.apps.cluster.domain.example.com/repository/java"
+        //DONE: Customize these variables for your environment
+        DEV_PROJECT = "rhn-gps-eboyer-movies-dev"
+        STAGE_PROJECT = "rhn-gps-eboyer-movies-stage"
+        APP_GIT_URL = "https://github.com/ericboyer/DO288-apps"
+        NEXUS_SERVER = "http://nexus-common.apps.ocp-na2.prod.nextcle.com/repository/java"
 
         // DO NOT CHANGE THE GLOBAL VARS BELOW THIS LINE
         APP_NAME = "movies"
