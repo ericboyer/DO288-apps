@@ -52,6 +52,9 @@ Example of creating apps from templates:
 - oc new-app --file mytemplate.yaml -p PARAM1=value1 -p PARAM2=value2
 - oc process -f mytemplate.yaml -p PARAM1=value1 -p PARAM2=value2 > myresourcelist.yaml | oc create -f -
 - Red Hat recommends using the new-app options and only using 'oc process -f my.yaml --parameters' to list parameters
+
+### simple pipeline
+- MEMORY_LIMIT parameter increases the amount of memory allocated to the jenkins container to improve performance. The JVM max heap size is set to 50% of the value of MEMORY_LIMIT by default. The default value is 1GB.
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
