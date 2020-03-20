@@ -55,6 +55,16 @@ Example of creating apps from templates:
 
 ### simple pipeline
 - MEMORY_LIMIT parameter increases the amount of memory allocated to the jenkins container to improve performance. The JVM max heap size is set to 50% of the value of MEMORY_LIMIT by default. The default value is 1GB.
+
+### cicd 
+- First deploy Jenkins to "cicd" namespace and configure Jenkins Openshift Sync plugin to add your app's namespace
+- Add "edit" role to user for all namespaces jenkins will be expected to interact with:
+'oc policy add-role-to-user edit system:serviceaccount:<jenins-project>:jenkins -n <my-dev-project>'
+- Create a pipeline buildconfig that points to the git url and branch (per application) and your Jenkinsfile
+- Define Jenkinsfile
+- Start the pipeline buildconfig using: 'oc start-build bc/<name>'
+
+### 
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
