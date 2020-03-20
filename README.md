@@ -73,6 +73,14 @@ Example of creating apps from templates:
 ### nexus
 - Source here in this repo, added built image to quay.io/eboyer
 - oc new-app --name nexus3 -f ../labs/nexus-service/nexus-template.yaml -p HOSTNAME=nexus-rhn-gps-eboyer.apps.ocp-na2.prod.nextcle.com
+
+### Summary external services
+- A service name becomes a local DNS host name for all pods inside an OpenShift cluster.
+- An external service is created with the oc create service externalname command, using the the external-name option.
+- Red Hat recommends that production deployments define health probes.
+- Red Hat provides a set of middleware container images to deploy applications in OpenShift, including applications packaged as fat JAR files.
+- The Fabric8 Maven plug-in provides features to generate OpenShift resources and trigger OpenShift processes, such as builds and deployments.
+
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
