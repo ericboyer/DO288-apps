@@ -14,7 +14,6 @@ public class MoviesController {
 
     private List<Movie> movies;
     private String status = "OK";
-    private String flag = "READY";
 
     @GetMapping("/movies")
     public List<Movie> getAllMovies() {
