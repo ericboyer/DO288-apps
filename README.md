@@ -84,3 +84,58 @@ Example of creating apps from templates:
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
+
+
+## Course in review
+### Chapter 1, Deploying and Managing Applications on an OpenShift Cluster
+- Deploy applications using various application packaging methods to an OpenShift cluster and manage their resources.
+- Describe the architecture and new features in OpenShift 4.
+- Deploy an application to the cluster from a Dockerfile with the CLI.
+- Deploy an application from a container image and manage its resources using the web console.
+- Deploy an application from source code and manage its resources using the command-line interface.
+
+### Chapter 2, Designing Containerized Applications for OpenShift
+- Select an application containerization method for an application and package it to run on an OpenShift cluster.
+- Select an appropriate application containerization method.
+- Build a container image with advanced Dockerfile directives.
+- Select a method for injecting configuration data into an application and create the necessary resources to do so.
+
+### Chapter 3, Publishing Enterprise Container Images
+- Interact with an enterprise registry and publish container images to it.
+- Manage container images in registries using Linux container tools.
+- Access the OpenShift internal registry using Linux container tools.
+- Create image streams for container images in external registries.
+
+### Chapter 4, Building Applications
+- Describe the OpenShift build process, trigger and manage builds.
+- Describe the OpenShift build process.
+- Manage application builds using the BuildConfig resource and CLI commands.
+- Trigger the build process with supported methods.
+- Process post build logic with a post-commit build hook.
+
+### Chapter 5, Customizing Source-to-Image Builds
+- Customize an existing S2I builder image and create a new one.
+- Describe the required and optional steps in the Source-to-Image build process.
+- Customize an existing S2I builder image with scripts.
+- Create a new S2I builder image with S2I tools.
+
+### Chapter 6, Creating Applications from OpenShift Templates
+- Describe the elements of a template and create a multicontainer application template.
+- Describe the elements of an OpenShift template.
+- Build a multicontainer application from a custom template.
+
+### Chapter 7, Managing Application Deployments
+- Monitor application health and implement various deployment methods for cloud-native applications.
+- Implement liveness and readiness probes.
+- Select the appropriate deployment strategy for a cloud-native application.
+- Manage the deployment of an application with CLI commands.
+
+### Chapter 8, Implementing Continuous Integration and Continuous Deployment Pipelines in OpenShift
+- Create and deploy Jenkins pipelines to facilitate continuous integration and deployment with OpenShift.
+- The objectives for this chapter are not included in the Comprehensive Review lab.
+
+### Chapter 9, Building Applications for OpenShift
+- Create and deploy applications on OpenShift.
+- Integrate a containerized application with non-containerized services.
+- Deploy containerized third-party applications following recommended practices for OpenShift.
+- Use a Red Hat OpenShift Application Runtime to deploy an application.
