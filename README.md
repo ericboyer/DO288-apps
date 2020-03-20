@@ -64,7 +64,12 @@ Example of creating apps from templates:
 - Define Jenkinsfile
 - Start the pipeline buildconfig using: 'oc start-build bc/<name>'
 
-### 
+### external services
+- OpenShift apps can talk using service endpoints. 
+- If apps are in the same project, use <app-name>; if in other project use <app-name>.<project> 
+- External services (outside OpenShift) can integrated using 'oc create service externalname myexternalservicename --external-name myexternal.service.com'
+- OpenShift's internal DNS will add svc.cluster.local suffix 
+
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
