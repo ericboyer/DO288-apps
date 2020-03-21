@@ -81,6 +81,13 @@ Example of creating apps from templates:
 - Red Hat provides a set of middleware container images to deploy applications in OpenShift, including applications packaged as fat JAR files.
 - The Fabric8 Maven plug-in provides features to generate OpenShift resources and trigger OpenShift processes, such as builds and deployments.
 
+### review dockerfile
+- Update dockerfile to run on OpenShift (optimize layers, anonymous user, etc.)
+- Build image and push to external registry
+- Create "common" project in openshift and create an imagestream pointing to your image in the external registry (import-image)
+- Create "app" project, and use 'oc policy add-role-to-group -n rhn-gps-eboyer-review-common system:image-puller system:serviceaccounts:rhn-gps-eboyer-review-dockerfile' to grant service accounts from the "app" project to access image streams from your "common" project 
+- From the "app" project, use oc new-app -i to point to the image stream created in your "common" project
+
 ## Cool troubleshooting techniques
 - Ping from api pod to backend database running on port 3306: 
 | `oc rsh quotesapi-1-r6f31 bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || echo FAIL'`
