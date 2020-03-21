@@ -84,6 +84,7 @@ Example of creating apps from templates:
 ### review dockerfile
 - Update dockerfile to run on OpenShift (optimize layers, anonymous user, etc.)
 - Build image and push to external registry
+- Create secret so OpenShift can pull the image from the external registry
 - Create "common" project in openshift and create an imagestream pointing to your image in the external registry (import-image)
 - Create "app" project, and use 'oc policy add-role-to-group -n rhn-gps-eboyer-review-common system:image-puller system:serviceaccounts:rhn-gps-eboyer-review-dockerfile' to grant service accounts from the "app" project to access image streams from your "common" project 
 - From the "app" project, use oc new-app -i to point to the image stream created in your "common" project
