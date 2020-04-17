@@ -33,14 +33,14 @@ objects:
         type: Source
 - apiVersion: v1
   data:
-    init: "false"
+    init: ${CLEAN_DATABASE}
   kind: ConfigMap
   metadata:
     name: todoapp
 - apiVersion: v1
-  data:
-    password: bXlwYXNz
-    user: dG9kb2FwcA==
+  stringData:
+    password: ${PASSWORD}
+    user: todoapp
   kind: Secret
   metadata:
     name: tododb
@@ -147,6 +147,18 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          livenessProbe:
+            httpGet:
+              path: /todo/api/items-count
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /todo/api/host
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
@@ -277,7 +289,7 @@ objects:
       app: backend
     name: backend
   spec:
-    host: backend-rhn-gps-eboyer-review-service.apps.ocp-na2.prod.nextcle.com
+    host: ${BACKEND}
     port:
       targetPort: 8080-tcp
     to:
@@ -317,7 +329,7 @@ objects:
         containers:
         - env:
           - name: BACKEND_HOST
-            value: api.example.com
+            value: ${BACKEND}
           imagePullPolicy: Always
           name: frontend
           ports:
@@ -368,7 +380,7 @@ objects:
       app: frontend
     name: frontend
   spec:
-    host: frontend-rhn-gps-eboyer-review-dockerfile.apps.ocp-na2.prod.nextcle.com
+    host: ${HOSTNAME}
     port:
       targetPort: 8080-tcp
     to:
@@ -400,6 +412,8 @@ parameters:
 - displayName: Secret for webhooks
   name: SECRET
   required: true
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
 - displayName: MySQL database password for the todoapp user
   name: PASSWORD
   required: true
@@ -409,4 +423,7 @@ parameters:
 - displayName: Host name to acccess the To Do List back-end HTTP API
   name: BACKEND
   required: true
-
+- displayName: Flag to initialize (or not) the application database
+  name: CLEAN_DATABASE
+  required: true
+  value: "false"
